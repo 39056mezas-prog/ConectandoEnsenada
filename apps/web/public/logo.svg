@@ -1,0 +1,81 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="300" viewBox="0 0 1800 300" role="img" aria-labelledby="title">
+
+    <title>ConectaEnsenada.org</title>
+
+    <defs>
+        <style>
+            .navy { fill:#0B3C6F; }
+            .white { fill:#FFFFFF; }
+
+            .wordmark{
+                fill:#FFFFFF;
+                font-family:Manrope,Inter,"Plus Jakarta Sans",Arial,sans-serif;
+                font-size:88px;
+                font-weight:700;
+                letter-spacing:-1px;
+            }
+        </style>
+    </defs>
+
+    <!-- ICON -->
+    <g transform="translate(30,30)">
+
+        <!-- Pin -->
+        <path class="navy" d="M100 0
+                 C45 0 0 45 0 100
+                 C0 170 100 235 100 235
+                 C100 235 200 170 200 100
+                 C200 45 155 0 100 0Z"></path>
+
+        <!-- White Circle -->
+        <circle class="white" cx="100" cy="92" r="69"></circle>
+
+        <!-- Anchor -->
+        <g class="navy">
+
+            <!-- Ring -->
+            <circle cx="100" cy="52" r="11"></circle>
+            <circle class="white" cx="100" cy="52" r="5"></circle>
+
+            <!-- Stem -->
+            <rect x="95" y="63" width="10" height="83" rx="5"></rect>
+
+            <!-- Crossbar -->
+            <rect x="70" y="78" width="60" height="10" rx="5"></rect>
+
+            <!-- Left Arm -->
+            <path d="
+                M95 136
+                C72 136 55 128 43 114
+                C34 104 30 92 30 79
+                L42 79
+                C42 102 60 120 95 120
+                Z"></path>
+
+            <!-- Right Arm -->
+            <path d="
+                M105 136
+                C128 136 145 128 157 114
+                C166 104 170 92 170 79
+                L158 79
+                C158 102 140 120 105 120
+                Z"></path>
+
+            <!-- Flukes -->
+            <polygon points="30,79 46,72 41,91"></polygon>
+            <polygon points="170,79 154,72 159,91"></polygon>
+
+            <!-- Bottom Point -->
+            <polygon points="92,146 108,146 100,158"></polygon>
+
+        </g>
+
+    </g>
+
+    <!-- WORDMARK -->
+    <text class="wordmark" x="255" y="165">
+        conectaensenada.org
+    </text>
+
+</svg>
