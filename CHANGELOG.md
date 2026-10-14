@@ -1,5 +1,17 @@
 # Changelog — ConectandoEnsenada.org
 
+## [Unreleased] — Deploy fix + new Supabase project
+
+### Fixed
+- Every page returned 500: `Footer`, `DiscoverMore`, `PlaceCard`, `PlaceContact` use event handlers and are now Client Components.
+- Middleware no longer crashes when Supabase env vars are missing or Supabase is unreachable.
+
+### Changed
+- Supabase project is now `pdoznhmckwovmrerlcro` (`.env.example`, RUNBOOK updated).
+- SQL migrations rewritten to match what is deployed (security fixes, immutable `f_unaccent` for FTS, HNSW vector index, API grants). Added migration 016.
+- `.env.example`: Mapbox variables replaced with MapLibre provider variables.
+- Added `.gitignore`, `.prettierrc.json`; removed committed `tsconfig.tsbuildinfo`.
+
 ## [0.4.0] — Sprint 4 — August 2026
 ### Added
 - Auth system: Google OAuth + email magic link (passwordless)
