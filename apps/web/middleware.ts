@@ -14,9 +14,21 @@ function isAuthOnly(p: string)  { const s = stripLocale(p); return AUTH_ONLY.som
 export async function middleware(request: NextRequest) {
   const response = handleI18nRouting(request)
   const pathname = request.nextUrl.pathname
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  // If Supabase env vars are missing (e.g. misconfigured deploy), keep public
+  // pages alive instead of crashing every request. Protected routes still redirect to login.
+  if (!supabaseUrl || !supabaseKey) {
+    if (isProtected(pathname)) {
+      const url = new URL('/login', request.url)
+      url.searchParams.set('next', stripLocale(pathname))
+      return NextResponse.redirect(url)
+    }
+    return response
+  }
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseKey,
     { cookies: {
       getAll() { return request.cookies.getAll() },
       setAll(cs: { name: string; value: string; options: CookieOptions }[]) {
@@ -27,7 +39,12 @@ export async function middleware(request: NextRequest) {
       },
     }},
   )
-  const { data: { user } } = await supabase.auth.getUser()
+  let user = null
+  try {
+    user = (await supabase.auth.getUser()).data.user
+  } catch {
+    user = null // Supabase unreachable: treat as signed out, don't crash the site
+  }
   if (isProtected(pathname) && !user) {
     const url = new URL('/login', request.url)
     url.searchParams.set('next', stripLocale(pathname))

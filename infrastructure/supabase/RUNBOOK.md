@@ -28,6 +28,7 @@ Run in this exact order:
 | `20260730000013_ads.sql` | advertising (Phase 4 placeholder) |
 | `20260730000014_indexes.sql` | all indexes + FTS columns |
 | `20260730000015_functions.sql` | search, view counts, moderation |
+| `20260730000016_security_hardening.sql` | lock down helper functions |
 
 ### Option B — Supabase CLI (Advanced)
 
@@ -39,18 +40,27 @@ npm install -g supabase
 supabase login
 
 # Link to your project
-supabase link --project-ref maacqnwwkkhgzjfcjirg
+supabase link --project-ref pdoznhmckwovmrerlcro
 
 # Push all migrations
 supabase db push
 ```
 
+## Current live project
+
+- Name: `conectando-ensenada` — ref `pdoznhmckwovmrerlcro` — region us-west-1
+- URL: `https://pdoznhmckwovmrerlcro.supabase.co`
+- All 16 migrations below are ALREADY applied to it. Only run them again on a brand-new project.
+
 ## After running migrations
+
+0. **Settings → Data API → Exposed schemas**: add `directory, content, listings, jobs, events, moderation, ads`.
+   Without this the app cannot read its own tables.
 
 1. Go to **Authentication → Providers** → enable **Google**
 2. Add your Google OAuth credentials
-3. Set **Site URL** to `https://conectandoensenada.org`
-4. Add `http://localhost:3000` to **Redirect URLs** (for local dev)
+3. Set **Site URL** to `https://www.conectandoensenada.org`
+4. Add these **Redirect URLs**: `http://localhost:3000/**`, `https://www.conectandoensenada.org/**`, `https://conectandoensenada.vercel.app/**`
 5. Go to **Storage** → create bucket `places` (public)
 6. Create bucket `listings` (public)
 7. Create bucket `articles` (public)
@@ -67,3 +77,13 @@ SELECT
 ```
 
 Expected: `categories = 57`, `profiles = 0`, `places = 0`
+
+
+## Vercel environment variables (Settings → Environment Variables, then redeploy)
+
+| Name | Value |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | `https://pdoznhmckwovmrerlcro.supabase.co` |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | the publishable key (`sb_publishable_...`, see `.env.example`) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase → Settings → API Keys → secret key. NEVER commit it. |
+| `NEXT_PUBLIC_SITE_URL` | `https://www.conectandoensenada.org` |

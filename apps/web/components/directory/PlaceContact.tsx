@@ -1,3 +1,5 @@
+'use client'
+
 import { whatsappUrl, normalizeUrl } from '@/lib/utils'
 import type { PlaceDetails } from '@/modules/directory/types'
 
