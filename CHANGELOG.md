@@ -4,6 +4,7 @@
 
 ### Fixed
 - Every page returned 500: `Footer`, `DiscoverMore`, `PlaceCard`, `PlaceContact` use event handlers and are now Client Components.
+- Browser crash ("Application error: a client-side exception") when `NEXT_PUBLIC_SUPABASE_*` were missing at build time: `lib/supabase/client.ts` now falls back to a placeholder instead of throwing.
 - Middleware no longer crashes when Supabase env vars are missing or Supabase is unreachable.
 
 ### Changed
