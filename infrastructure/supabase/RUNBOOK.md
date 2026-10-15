@@ -87,3 +87,8 @@ Expected: `categories = 57`, `profiles = 0`, `places = 0`
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | the publishable key (`sb_publishable_...`, see `.env.example`) |
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase → Settings → API Keys → secret key. NEVER commit it. |
 | `NEXT_PUBLIC_SITE_URL` | `https://www.conectandoensenada.org` |
+
+> **Important:** `NEXT_PUBLIC_*` variables are baked into the site when Vercel BUILDS it.
+> After adding or changing any of them, go to Deployments → ⋯ on the latest deployment → **Redeploy**
+> (untick "Use existing Build Cache"). Just saving the variable is not enough.
+> Make sure each variable is enabled for the **Production** environment.
