@@ -1,5 +1,21 @@
 # Changelog — ConectandoEnsenada.org
 
+## [Unreleased] — Living Coast redesign
+
+### Added
+- `BrandLogo` / `BrandMark` (`components/brand/BrandLogo.tsx`): inline-SVG pin-and-anchor mark matching `favicon.ico`, plus live-text wordmark in Manrope. Replaces the 1800px-wide `logo.svg` in header, footer, login/register and homepage (that file rendered as unreadable tiny text, and its navy pin vanished on the navy header). `public/logo-mark.svg` is a standalone copy of the mark.
+- Active-page indicator in the main menu (desktop + mobile): highlighted pill, `aria-current="page"`, and a glowing underline that glides between items. Locale-aware (`/en/playas` ⇒ Beaches) and nested-route aware (`/negocios/[slug]` keeps Businesses active; `/negocios/nuevo` does not).
+- `i18n/navigation.ts`: next-intl `Link`/`usePathname` helpers. All internal links now keep the visitor's language.
+- `PageHero` + `SeaWaves`: shared layered sea hero (drifting parallax waves, glow, grain) used on directory pages, tourism and the homepage.
+- Depth system in `globals.css`: layered navy-tinted shadow scale, lifting `.card`/`.tile`, `.btn-accent`, `.btn-ghost-light`, frosted-glass sticky header on scroll, themed selection/scrollbar/focus ring, reduced-motion support.
+- Branded `apple-touch-icon.png` (white mark on navy) replacing the solid-navy placeholder.
+
+### Changed
+- Emoji used as icons replaced with lucide icons across homepage, directory, tourism and menus.
+- Accent buttons use navy text on cyan (white on `#2AABE2` was 2.6:1); tertiary text darkened to meet 4.5:1.
+- Content gutters aligned with the header at every breakpoint; search placeholder now matches the section (beaches, restaurants…).
+- Removed the "Guía Turística" eyebrow label above the tourism headline.
+
 ## [Unreleased] — Deploy fix + new Supabase project
 
 ### Fixed
