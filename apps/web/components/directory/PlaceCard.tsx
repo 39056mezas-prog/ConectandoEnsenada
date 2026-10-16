@@ -1,7 +1,9 @@
 'use client'
 
-import Link from 'next/link'
 import Image from 'next/image'
+import { MapPin, Star, BadgeCheck } from 'lucide-react'
+import { Link } from '@/i18n/navigation'
+import { BrandMark } from '@/components/brand/BrandLogo'
 import type { PlaceSearchResult } from '@/modules/directory/types'
 
 interface PlaceCardProps {
@@ -46,17 +48,8 @@ export function PlaceCard({ place, categoryName, coverImage }: PlaceCardProps) {
         className="card"
         style={{
           overflow: 'hidden',
-          transition: 'box-shadow 0.2s, transform 0.2s',
           cursor: 'pointer',
           position: 'relative',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'translateY(-2px)'
-          e.currentTarget.style.boxShadow = 'var(--shadow-card-hover)'
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'translateY(0)'
-          e.currentTarget.style.boxShadow = 'var(--shadow-card)'
         }}
       >
         {/* ── Cover image / placeholder ──────────────────────────────────── */}
@@ -65,7 +58,7 @@ export function PlaceCard({ place, categoryName, coverImage }: PlaceCardProps) {
             height: '160px',
             background: coverImage
               ? 'transparent'
-              : `linear-gradient(135deg, var(--color-navy-700), var(--color-navy-600))`,
+              : `radial-gradient(90% 80% at 80% 0%, rgb(42 171 226 / 0.45), transparent 60%), linear-gradient(160deg, var(--color-navy-700), var(--color-navy-600))`,
             position: 'relative',
             overflow: 'hidden',
           }}
@@ -85,16 +78,8 @@ export function PlaceCard({ place, categoryName, coverImage }: PlaceCardProps) {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
-              <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '3rem',
-                  fontWeight: 800,
-                  color: 'rgba(255,255,255,0.25)',
-                  userSelect: 'none',
-                }}
-              >
-                {place.name_es.charAt(0).toUpperCase()}
+              <span aria-hidden="true" style={{ opacity: 0.16 }}>
+                <BrandMark size={84} color="#fff" />
               </span>
             </div>
           )}
@@ -104,16 +89,18 @@ export function PlaceCard({ place, categoryName, coverImage }: PlaceCardProps) {
             <div
               style={{
                 position: 'absolute', top: '0.5rem', left: '0.5rem',
-                background: '#F59E0B', color: '#fff',
-                fontSize: '0.6875rem', fontWeight: 700,
+                background: 'linear-gradient(180deg, #fbbf24, #f59e0b)', color: '#3b2400',
+                fontSize: '0.6875rem', fontWeight: 800,
                 fontFamily: 'var(--font-display)',
-                padding: '0.125rem 0.5rem',
+                padding: '0.1875rem 0.5rem 0.1875rem 0.375rem',
                 borderRadius: 'var(--radius-full)',
-                letterSpacing: '0.05em',
+                letterSpacing: '0.04em',
                 textTransform: 'uppercase',
+                display: 'inline-flex', alignItems: 'center', gap: '0.25rem',
+                boxShadow: 'var(--shadow-inset-top), 0 4px 10px -2px rgb(120 70 0 / 0.5)',
               }}
             >
-              ★ Destacado
+              <Star size={11} fill="currentColor" strokeWidth={0} aria-hidden="true" /> Destacado
             </div>
           )}
 
@@ -122,15 +109,15 @@ export function PlaceCard({ place, categoryName, coverImage }: PlaceCardProps) {
             <div
               style={{
                 position: 'absolute', top: '0.5rem', right: '0.5rem',
-                background: 'rgba(255,255,255,0.95)',
+                background: 'rgba(255,255,255,0.96)',
                 borderRadius: 'var(--radius-full)',
                 padding: '0.25rem',
                 display: 'flex', alignItems: 'center',
+                boxShadow: '0 4px 10px -2px rgb(2 11 24 / 0.35)',
               }}
+              title="Verificado"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--color-accent)">
-                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
-              </svg>
+              <BadgeCheck size={16} strokeWidth={2.25} color="var(--color-accent-hover)" aria-label="Verificado" />
             </div>
           )}
         </div>
@@ -206,9 +193,7 @@ export function PlaceCard({ place, categoryName, coverImage }: PlaceCardProps) {
                 gap: '0.25rem',
               }}
             >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0, marginTop: '1px' }}>
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-              </svg>
+              <MapPin size={13} strokeWidth={2} aria-hidden="true" style={{ flexShrink: 0, marginTop: '1px' }} />
               <span style={{ lineHeight: 1.4 }}>
                 {place.neighborhood ?? place.address}
               </span>

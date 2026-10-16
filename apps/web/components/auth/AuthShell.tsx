@@ -1,17 +1,17 @@
 'use client'
-import Link from 'next/link'
-import Image from 'next/image'
+import { Link } from '@/i18n/navigation'
+import { BrandLogo } from '@/components/brand/BrandLogo'
 
 export function AuthShell({ children, title, subtitle }: { children: React.ReactNode; title?: string; subtitle?: string }) {
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--color-surface-raised)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem 1rem' }}>
+    <div style={{ minHeight: '100vh', background: 'radial-gradient(70% 50% at 50% 0%, rgb(42 171 226 / 0.16), transparent 70%), var(--color-surface-raised)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem 1rem' }}>
       <div style={{ width: '100%', maxWidth: '400px' }}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <Link href="/"><Image src="/logo.svg" alt="ConectandoEnsenada.org" width={240} height={44} style={{ height: '40px', width: 'auto', marginBottom: '1.25rem' }} /></Link>
+          <Link href="/" aria-label="ConectandoEnsenada.org — inicio" style={{ display: 'inline-block', marginBottom: '1.5rem' }}><BrandLogo tone="dark" size={42} /></Link>
           {title && <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-navy-600)', marginBottom: '0.25rem' }}>{title}</h1>}
           {subtitle && <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>{subtitle}</p>}
         </div>
-        <div style={{ background: 'var(--color-surface)', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-card-hover)', padding: '2rem' }}>
+        <div style={{ background: 'var(--color-surface)', borderRadius: 'var(--radius-xl)', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-3)', padding: '2rem' }}>
           {children}
         </div>
         <p style={{ textAlign: 'center', fontSize: '0.75rem', color: 'var(--color-text-tertiary)', marginTop: '1.5rem' }}>

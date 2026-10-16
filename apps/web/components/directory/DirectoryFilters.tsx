@@ -8,6 +8,7 @@ interface DirectoryFiltersProps {
   categories: CategoryRow[]
   activeCategory?: string
   searchQuery?: string
+  placeholder?: string
   showMapToggle?: boolean
   mapVisible?: boolean
   onMapToggle?: () => void
@@ -17,6 +18,7 @@ export function DirectoryFilters({
   categories,
   activeCategory,
   searchQuery = '',
+  placeholder = 'Buscar negocios en Ensenada…',
   showMapToggle = true,
   mapVisible,
   onMapToggle,
@@ -40,10 +42,13 @@ export function DirectoryFilters({
   return (
     <div
       style={{
-        background: 'var(--color-surface)',
+        background: 'rgb(255 255 255 / 0.88)',
+        WebkitBackdropFilter: 'saturate(160%) blur(12px)',
+        backdropFilter: 'saturate(160%) blur(12px)',
         borderBottom: '1px solid var(--color-border)',
+        boxShadow: '0 8px 20px -14px rgb(11 60 111 / 0.35)',
         position: 'sticky',
-        top: '60px',  // below the header
+        top: '64px',  // below the header
         zIndex: 100,
       }}
     >
@@ -62,8 +67,8 @@ export function DirectoryFilters({
             <input
               type="search"
               defaultValue={searchQuery}
-              placeholder="Buscar negocios en Ensenada…"
-              aria-label="Buscar negocios"
+              placeholder={placeholder}
+              aria-label={placeholder.replace("…", "")}
               style={{
                 width: '100%',
                 paddingLeft: '2.25rem',
@@ -76,10 +81,11 @@ export function DirectoryFilters({
                 color: 'var(--color-text-primary)',
                 outline: 'none',
                 background: 'var(--color-surface-raised)',
-                transition: 'border-color var(--transition-fast)',
+                boxShadow: 'inset 0 1px 2px rgb(11 60 111 / 0.06)',
+                transition: 'border-color var(--transition-fast), box-shadow var(--transition-fast)',
               }}
-              onFocus={(e) => (e.target.style.borderColor = 'var(--color-accent)')}
-              onBlur={(e)  => (e.target.style.borderColor = 'var(--color-border)')}
+              onFocus={(e) => { e.target.style.borderColor = 'var(--color-accent)'; e.target.style.boxShadow = '0 0 0 4px rgb(42 171 226 / 0.18)' }}
+              onBlur={(e)  => { e.target.style.borderColor = 'var(--color-border)'; e.target.style.boxShadow = 'inset 0 1px 2px rgb(11 60 111 / 0.06)' }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   updateParam('q', (e.target as HTMLInputElement).value || null)
@@ -141,7 +147,8 @@ export function DirectoryFilters({
               border: '1.5px solid',
               borderColor: !activeCategory ? 'var(--color-navy-600)' : 'var(--color-border)',
               borderRadius: 'var(--radius-full)',
-              background: !activeCategory ? 'var(--color-navy-600)' : 'transparent',
+              background: !activeCategory ? 'linear-gradient(180deg, var(--color-navy-500), var(--color-navy-600))' : 'transparent',
+              boxShadow: !activeCategory ? 'var(--shadow-inset-top), 0 4px 10px -3px rgb(11 60 111 / 0.45)' : 'none',
               color: !activeCategory ? '#fff' : 'var(--color-text-secondary)',
               fontFamily: 'var(--font-display)',
               fontWeight: 600,
@@ -167,7 +174,8 @@ export function DirectoryFilters({
                   border: '1.5px solid',
                   borderColor: active ? 'var(--color-navy-600)' : 'var(--color-border)',
                   borderRadius: 'var(--radius-full)',
-                  background: active ? 'var(--color-navy-600)' : 'transparent',
+                  background: active ? 'linear-gradient(180deg, var(--color-navy-500), var(--color-navy-600))' : 'transparent',
+                  boxShadow: active ? 'var(--shadow-inset-top), 0 4px 10px -3px rgb(11 60 111 / 0.45)' : 'none',
                   color: active ? '#fff' : 'var(--color-text-secondary)',
                   fontFamily: 'var(--font-display)',
                   fontWeight: 600,

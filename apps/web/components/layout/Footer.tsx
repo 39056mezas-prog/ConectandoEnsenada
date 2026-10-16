@@ -1,7 +1,8 @@
 'use client'
 
-import Link from 'next/link'
-import Image from 'next/image'
+import { Plus } from 'lucide-react'
+import { Link } from '@/i18n/navigation'
+import { BrandLogo } from '@/components/brand/BrandLogo'
 
 const FOOTER_LINKS = [
   { label: 'Negocios',    href: '/negocios'    },
@@ -26,15 +27,16 @@ export function Footer() {
   return (
     <footer
       style={{
-        background: 'var(--color-navy-800)',
+        background: 'radial-gradient(80% 120% at 90% 0%, rgb(42 171 226 / 0.14), transparent 60%), linear-gradient(180deg, var(--color-navy-800), var(--color-navy-900))',
         color: 'rgba(255,255,255,0.7)',
         marginTop: 'auto',
+        boxShadow: 'inset 0 1px 0 rgb(42 171 226 / 0.35)',
       }}
     >
       {/* ── Main footer ─────────────────────────────────────────────────── */}
       <div
         className="container-app"
-        style={{ padding: '3rem 1.5rem 2rem' }}
+        style={{ paddingTop: '3rem', paddingBottom: '2rem' }}
       >
         <div
           style={{
@@ -45,18 +47,14 @@ export function Footer() {
         >
           {/* Brand column */}
           <div>
-            <Image
-              src="/logo.svg"
-              alt="ConectandoEnsenada.org"
-              width={220}
-              height={40}
-              style={{ height: '36px', width: 'auto', marginBottom: '1rem', opacity: 0.9 }}
-            />
+            <div style={{ marginBottom: '1rem' }}>
+              <BrandLogo tone="light" size={36} />
+            </div>
             <p style={{ fontSize: '0.875rem', lineHeight: 1.6, maxWidth: '260px' }}>
               Tu ciudad. Todo en un solo lugar.
               La plataforma digital de Ensenada, Baja California.
             </p>
-            <p style={{ fontSize: '0.75rem', marginTop: '1rem', opacity: 0.5 }}>
+            <p style={{ fontSize: '0.75rem', marginTop: '1rem', opacity: 0.7 }}>
               Datos del mapa © <a
                 href="https://www.openstreetmap.org/copyright"
                 target="_blank"
@@ -75,7 +73,7 @@ export function Footer() {
                 fontSize: '0.8125rem',
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.4)',
+                color: 'rgba(255,255,255,0.6)',
                 marginBottom: '1rem',
               }}
             >
@@ -110,7 +108,7 @@ export function Footer() {
                 fontSize: '0.8125rem',
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.4)',
+                color: 'rgba(255,255,255,0.6)',
                 marginBottom: '1rem',
               }}
             >
@@ -121,18 +119,19 @@ export function Footer() {
             </p>
             <Link
               href="/negocios/nuevo"
+              className="btn-accent"
               style={{
-                display: 'inline-block',
-                background: 'var(--color-accent)',
-                color: '#fff',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.375rem',
                 fontFamily: 'var(--font-display)',
                 fontWeight: 700,
                 fontSize: '0.875rem',
-                padding: '0.5rem 1.25rem',
+                padding: '0.625rem 1.25rem',
                 borderRadius: 'var(--radius-full)',
               }}
             >
-              + Agregar negocio
+              <Plus size={15} strokeWidth={2.75} aria-hidden="true" /> Agregar negocio
             </Link>
           </div>
         </div>
@@ -142,7 +141,7 @@ export function Footer() {
       <div
         style={{
           borderTop: '1px solid rgba(255,255,255,0.08)',
-          padding: '1rem 1.5rem',
+          padding: '1rem 0',
         }}
       >
         <div
@@ -156,7 +155,7 @@ export function Footer() {
             fontSize: '0.75rem',
           }}
         >
-          <span style={{ opacity: 0.5 }}>
+          <span style={{ opacity: 0.7 }}>
             © {year} ConectandoEnsenada.org — Ensenada, Baja California, México
           </span>
           <div style={{ display: 'flex', gap: '1.25rem' }}>
@@ -164,9 +163,9 @@ export function Footer() {
               <Link
                 key={href}
                 href={href}
-                style={{ color: 'rgba(255,255,255,0.45)', transition: 'color var(--transition-fast)' }}
+                style={{ color: 'rgba(255,255,255,0.65)', transition: 'color var(--transition-fast)' }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.8)')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.65)')}
               >
                 {label}
               </Link>

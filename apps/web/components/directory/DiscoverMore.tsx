@@ -1,6 +1,7 @@
 'use client'
 
-import Link from 'next/link'
+import { Umbrella, UtensilsCrossed, PartyPopper, Newspaper, Mountain, Waves, SearchX, Plus, type LucideIcon } from 'lucide-react'
+import { Link } from '@/i18n/navigation'
 
 interface DiscoverMoreProps {
   title?: string
@@ -12,13 +13,13 @@ interface DiscoverMoreProps {
   contributeHref?: string
 }
 
-const POPULAR_SECTIONS = [
-  { emoji: '🏖️', label: 'Playas',       href: '/playas'      },
-  { emoji: '🍽️', label: 'Restaurantes', href: '/restaurantes' },
-  { emoji: '🎉', label: 'Eventos',       href: '/eventos'     },
-  { emoji: '🗞️', label: 'Noticias',      href: '/noticias'   },
-  { emoji: '🥾', label: 'Senderismo',    href: '/senderismo'  },
-  { emoji: '🌊', label: 'Turismo',       href: '/turismo'     },
+const POPULAR_SECTIONS: { Icon: LucideIcon; label: string; href: string }[] = [
+  { Icon: Umbrella,        label: 'Playas',       href: '/playas'      },
+  { Icon: UtensilsCrossed, label: 'Restaurantes', href: '/restaurantes' },
+  { Icon: PartyPopper,     label: 'Eventos',      href: '/eventos'     },
+  { Icon: Newspaper,       label: 'Noticias',     href: '/noticias'    },
+  { Icon: Mountain,        label: 'Senderismo',   href: '/senderismo'  },
+  { Icon: Waves,           label: 'Turismo',      href: '/turismo'     },
 ]
 
 export function DiscoverMore({
@@ -37,7 +38,9 @@ export function DiscoverMore({
       }}
     >
       {/* Icon */}
-      <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🌊</div>
+      <div aria-hidden="true" style={{ width: 64, height: 64, margin: '0 auto 1.25rem', borderRadius: 'var(--radius-xl)', display: 'grid', placeItems: 'center', background: 'linear-gradient(145deg, var(--color-cyan-50), var(--color-cyan-100))', boxShadow: 'var(--shadow-2)', color: 'var(--color-cyan-600)' }}>
+        <Waves size={30} strokeWidth={1.75} />
+      </div>
 
       {/* Heading */}
       <h2
@@ -65,7 +68,7 @@ export function DiscoverMore({
           marginBottom: '2.5rem',
         }}
       >
-        {POPULAR_SECTIONS.map(({ emoji, label, href }) => (
+        {POPULAR_SECTIONS.map(({ Icon, label, href }) => (
           <Link
             key={href}
             href={href}
@@ -96,7 +99,7 @@ export function DiscoverMore({
               e.currentTarget.style.borderColor = 'var(--color-border)'
             }}
           >
-            <span>{emoji}</span>
+            <Icon size={16} strokeWidth={2} aria-hidden="true" />
             <span>{label}</span>
           </Link>
         ))}
@@ -128,22 +131,18 @@ export function DiscoverMore({
         </p>
         <Link
           href={contributeHref}
+          className="btn-accent"
           style={{
             display: 'inline-block',
-            background: 'var(--color-accent)',
-            color: '#fff',
             fontFamily: 'var(--font-display)',
             fontWeight: 700,
             fontSize: '0.9375rem',
             padding: '0.625rem 1.5rem',
             borderRadius: 'var(--radius-full)',
             textDecoration: 'none',
-            transition: 'opacity var(--transition-fast)',
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.88')}
-          onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
         >
-          + {contributeLabel}
+          <Plus size={16} strokeWidth={2.75} aria-hidden="true" style={{ marginRight: 4, verticalAlign: '-2px' }} />{contributeLabel}
         </Link>
       </div>
     </div>
@@ -154,7 +153,7 @@ export function DiscoverMore({
 export function NoResults({ query }: { query?: string }) {
   return (
     <div style={{ padding: '2rem', textAlign: 'center' }}>
-      <p style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>🔍</p>
+      <SearchX size={28} strokeWidth={1.75} aria-hidden="true" style={{ margin: '0 auto 0.5rem', color: 'var(--color-text-tertiary)' }} />
       <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, color: 'var(--color-navy-600)', marginBottom: '0.375rem' }}>
         {query ? `Sin resultados para "${query}"` : 'Sin resultados'}
       </p>

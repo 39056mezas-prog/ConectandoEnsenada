@@ -2,6 +2,8 @@
 import { useState, useEffect, useTransition } from 'react'
 import { useSearchParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
+import { Building2, UtensilsCrossed, Umbrella, Mountain, MapPin, type LucideIcon } from 'lucide-react'
+import { PageHero } from '@/components/layout/PageHero'
 import { PlaceCard }               from './PlaceCard'
 import { DirectoryFilters }        from './DirectoryFilters'
 import { DiscoverMore, NoResults } from './DiscoverMore'
@@ -24,6 +26,19 @@ export interface DirectoryListingConfig {
   emptySubtitle: string
   contributeHref: string
   contributeLabel: string
+}
+
+const ICON_BY_TYPE: Record<string, LucideIcon> = {
+  business: Building2,
+  restaurant: UtensilsCrossed,
+  beach: Umbrella,
+  trail: Mountain,
+}
+const SEARCH_HINT: Record<string, string> = {
+  business: 'Buscar negocios en Ensenada…',
+  restaurant: 'Buscar restaurantes en Ensenada…',
+  beach: 'Buscar playas en Ensenada…',
+  trail: 'Buscar rutas en Ensenada…',
 }
 
 export function DirectoryListing({ config }: { config: DirectoryListingConfig }) {
@@ -64,14 +79,9 @@ export function DirectoryListing({ config }: { config: DirectoryListingConfig })
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-surface-raised)' }}>
-      <div style={{ background: 'linear-gradient(135deg, var(--color-navy-700), var(--color-navy-600))', padding: '1.75rem 1.5rem' }}>
-        <div className="container-app">
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 800, color: '#fff', marginBottom: '0.25rem' }}>{config.emoji} {config.titleEs}</h1>
-          <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.9375rem' }}>{config.subtitleEs}</p>
-        </div>
-      </div>
-      <DirectoryFilters categories={categories} activeCategory={categoria} searchQuery={q} showMapToggle mapVisible={mapVisible} onMapToggle={() => setMapVisible(v => !v)} />
-      <div className="container-app" style={{ padding: '1.5rem 1.5rem 3rem' }}>
+      <PageHero icon={ICON_BY_TYPE[config.placeType] ?? MapPin} title={config.titleEs} subtitle={config.subtitleEs} next="var(--color-surface)" />
+      <DirectoryFilters placeholder={SEARCH_HINT[config.placeType]} categories={categories} activeCategory={categoria} searchQuery={q} showMapToggle mapVisible={mapVisible} onMapToggle={() => setMapVisible(v => !v)} />
+      <div className="container-app" style={{ paddingTop: '1.5rem', paddingBottom: '3rem' }}>
         <div style={{ display: 'grid', gridTemplateColumns: mapVisible ? '1fr 420px' : '1fr', gap: '1.5rem', alignItems: 'start' }}>
           <div>
             {!loading && <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-tertiary)', marginBottom: '1rem' }}>{places.length === 0 ? 'Sin resultados' : `${places.length} resultado${places.length !== 1 ? 's' : ''}`}{q ? ` para "${q}"` : ''}</p>}

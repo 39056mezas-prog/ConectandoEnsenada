@@ -3,6 +3,8 @@
 import { useState, useEffect, useTransition } from 'react'
 import { useSearchParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
+import { Building2 } from 'lucide-react'
+import { PageHero } from '@/components/layout/PageHero'
 import { PlaceCard }               from '@/components/directory/PlaceCard'
 import { DirectoryFilters }        from '@/components/directory/DirectoryFilters'
 import { DiscoverMore, NoResults } from '@/components/directory/DiscoverMore'
@@ -92,16 +94,7 @@ export default function NegociosPage() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-surface-raised)' }}>
       {/* Page header */}
-      <div style={{ background: 'linear-gradient(135deg, var(--color-navy-700), var(--color-navy-600))', padding: '1.75rem 1.5rem' }}>
-        <div className="container-app">
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 800, color: '#fff', marginBottom: '0.25rem' }}>
-            🏪 Negocios en Ensenada
-          </h1>
-          <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9375rem' }}>
-            Directorio completo de negocios locales
-          </p>
-        </div>
-      </div>
+      <PageHero icon={Building2} title="Negocios en Ensenada" subtitle="Directorio completo de negocios locales" next="var(--color-surface)" />
 
       {/* Filters */}
       <DirectoryFilters
@@ -114,7 +107,7 @@ export default function NegociosPage() {
       />
 
       {/* Main content */}
-      <div className="container-app" style={{ padding: '1.5rem 1.5rem 3rem' }}>
+      <div className="container-app" style={{ paddingTop: '1.5rem', paddingBottom: '3rem' }}>
         <div
           style={{
             display: 'grid',

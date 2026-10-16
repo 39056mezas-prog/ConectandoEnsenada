@@ -4,7 +4,7 @@
 // ============================================================================
 
 import { notFound }          from 'next/navigation'
-import Link                   from 'next/link'
+import { Link } from '@/i18n/navigation'
 import type { Metadata }     from 'next'
 import { PlaceProfile }      from '@/components/directory/PlaceProfile'
 import { DiscoverMore }      from '@/components/directory/DiscoverMore'
@@ -75,7 +75,7 @@ export default async function PlaceDetailPage({ params }: Props) {
 
       {/* ── Content ────────────────────────────────────────────────────── */}
       <div style={{ background: 'var(--color-surface-raised)', minHeight: '100vh' }}>
-        <div className="container-app" style={{ padding: '2rem 1.5rem 4rem' }}>
+        <div className="container-app" style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
           <PlaceProfile place={place} locale={locale} />
 
           {/* Reviews placeholder (Sprint 4) */}

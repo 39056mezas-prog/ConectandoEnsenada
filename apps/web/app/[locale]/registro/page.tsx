@@ -1,7 +1,7 @@
 'use client'
 import { useActionState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { signInWithGoogle, signInWithMagicLink } from '@/lib/auth/actions'
 import type { MagicLinkState } from '@/lib/auth/actions'
 import { AuthShell, Divider, GoogleIcon, authInputStyle } from '@/components/auth/AuthShell'

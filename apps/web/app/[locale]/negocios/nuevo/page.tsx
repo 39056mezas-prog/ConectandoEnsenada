@@ -7,7 +7,7 @@
 // ============================================================================
 
 import { useActionState, useEffect, useState } from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { submitPlace } from '@/modules/directory/actions'
 import type { SubmitPlaceState } from '@/modules/directory/actions'
 import { createClient } from '@/lib/supabase/client'

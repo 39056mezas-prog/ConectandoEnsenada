@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState, useRef } from 'react'
-import Link from 'next/link'
+import { User as UserIcon, Plus } from 'lucide-react'
+import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import { signOut } from '@/lib/auth/actions'
@@ -30,7 +31,7 @@ export function UserMenu({ loginLabel = 'Iniciar sesión' }: { loginLabel?: stri
   if (loading) return <div style={{ width: '80px', height: '32px', borderRadius: 'var(--radius-full)', background: 'rgba(255,255,255,0.12)' }} />
 
   if (!user) return (
-    <Link href="/login" style={{ color: 'rgba(255,255,255,0.82)', fontSize: '0.8125rem', fontWeight: 600, padding: '0.375rem 0.875rem', borderRadius: 'var(--radius-full)', border: '1.5px solid rgba(255,255,255,0.25)', transition: 'all var(--transition-fast)', whiteSpace: 'nowrap' }}>
+    <Link href="/login" className="btn-ghost-light" style={{ fontFamily: 'var(--font-display)', fontSize: '0.8125rem', fontWeight: 700, padding: '0.45rem 1rem', borderRadius: 'var(--radius-full)', whiteSpace: 'nowrap' }}>
       {loginLabel}
     </Link>
   )
@@ -48,14 +49,14 @@ export function UserMenu({ loginLabel = 'Iniciar sesión' }: { loginLabel?: stri
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="2.5" style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.15s' }}><path d="m6 9 6 6 6-6"/></svg>
       </button>
       {open && (
-        <div style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-modal)', minWidth: '200px', zIndex: 1050, overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-3)', minWidth: '200px', zIndex: 1050, overflow: 'hidden' }}>
           <div style={{ padding: '0.875rem 1rem', borderBottom: '1px solid var(--color-border)' }}>
             <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.9rem', color: 'var(--color-navy-600)', marginBottom: '0.125rem' }}>{(user.user_metadata?.full_name as string) ?? 'Mi cuenta'}</p>
             <p style={{ fontSize: '0.75rem', color: 'var(--color-text-tertiary)', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user.email}</p>
           </div>
-          {[{ href: '/perfil', label: '👤 Mi perfil' }, { href: '/negocios/nuevo', label: '+ Agregar lugar' }].map(({ href, label }) => (
-            <Link key={href} href={href} onClick={() => setOpen(false)} style={{ display: 'block', padding: '0.625rem 1rem', fontSize: '0.875rem', color: 'var(--color-text-secondary)', fontFamily: 'var(--font-display)', fontWeight: 500 }}>
-              {label}
+          {[{ href: '/perfil', label: 'Mi perfil', Icon: UserIcon }, { href: '/negocios/nuevo', label: 'Agregar lugar', Icon: Plus }].map(({ href, label, Icon }) => (
+            <Link key={href} href={href} onClick={() => setOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', padding: '0.625rem 1rem', fontSize: '0.875rem', color: 'var(--color-text-secondary)', fontFamily: 'var(--font-display)', fontWeight: 500 }}>
+              <Icon size={15} strokeWidth={2} aria-hidden="true" /> {label}
             </Link>
           ))}
           <div style={{ borderTop: '1px solid var(--color-border)' }}>

@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     icons: {
       icon: '/favicon.ico',
       shortcut: '/favicon.ico',
-      // TODO: Replace apple-touch-icon.png with proper branded 180x180 icon before production launch
+      // apple-touch-icon.png = white pin-and-anchor mark (from favicon) on brand navy, 180x180
       apple: '/apple-touch-icon.png',
     },
     openGraph: { type: 'website', siteName: t('site_name'), locale: locale === 'en' ? 'en_US' : 'es_MX', alternateLocale: locale === 'en' ? ['es_MX'] : ['en_US'], images: [{ url: '/og-default.png', width: 1200, height: 630, alt: t('site_name') }] },

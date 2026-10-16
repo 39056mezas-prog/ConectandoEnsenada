@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import dynamic from 'next/dynamic'
 import type { PlaceDetails } from '@/modules/directory/types'
 import { PlaceGallery } from './PlaceGallery'

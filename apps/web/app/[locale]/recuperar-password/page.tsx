@@ -1,6 +1,6 @@
 'use client'
 import { useActionState } from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { signInWithMagicLink } from '@/lib/auth/actions'
 import type { MagicLinkState } from '@/lib/auth/actions'
 import { AuthShell, authInputStyle } from '@/components/auth/AuthShell'
