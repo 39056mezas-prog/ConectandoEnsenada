@@ -92,3 +92,37 @@ Expected: `categories = 57`, `profiles = 0`, `places = 0`
 > After adding or changing any of them, go to Deployments → ⋯ on the latest deployment → **Redeploy**
 > (untick "Use existing Build Cache"). Just saving the variable is not enough.
 > Make sure each variable is enabled for the **Production** environment.
+
+
+## After every Vercel deploy: open `/api/health`
+
+Open `https://www.conectandoensenada.org/api/health` in the browser. It must say `"healthy": true`.
+If not, `env.problems` tells you exactly which Vercel variable is wrong (wrong format, secret key in the
+public slot, missing `https://`, …). Fix it in Vercel → Settings → Environment Variables (tick **Production**),
+then redeploy **without** build cache.
+
+## Publishing the first news / classifieds (until the admin panel exists)
+
+The front page reads **published** articles and **active** classifieds. Until there is an admin screen,
+add them in Supabase → SQL Editor. Replace every `<…>` with your real text (do not run the placeholders).
+
+```sql
+-- A news story (status must be 'published' to appear)
+insert into content.articles (title_es, slug, excerpt_es, content_es, category_id, source_type, status, published_at, is_featured, featured_image)
+values (
+  '<Titular>', '<titular-en-minusculas-con-guiones>', '<Resumen de 1-2 líneas>',
+  E'<Párrafo 1>\n\n<Párrafo 2>',
+  (select id from public.categories where slug = 'local'),   -- local | gobierno-news | turismo-news | negocios-news | deportes-news | cultura-news
+  'original', 'published', now(), false, null                 -- featured_image: URL of an image you have rights to, or null
+);
+
+-- A classified (seller_id = the id of a user in public.profiles; status 'active' to show)
+insert into listings.listings (seller_id, title, slug, description, category_id, price, currency, contact_name, contact_whatsapp, neighborhood, city, status)
+values (
+  '<uuid-de-un-perfil>', '<Título>', '<titulo-con-guiones>', '<Descripción>',
+  (select id from public.categories where slug = 'vehiculos'), -- vehiculos | electronica | muebles | ropa | herramientas | servicios-mkt | deportes-mkt | otro-mkt
+  0, 'MXN', '<Nombre>', '<52646XXXXXXX>', '<Colonia>', 'Ensenada', 'active'
+);
+```
+If you aggregate news from another outlet, set `source_type` to `aggregated`, fill `source_name` and `source_url`,
+and write your own summary — the story page shows the credit and a link to the original.
