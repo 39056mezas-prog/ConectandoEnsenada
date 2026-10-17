@@ -1,6 +1,6 @@
 'use client'
 
-import { Umbrella, UtensilsCrossed, PartyPopper, Newspaper, Mountain, Waves, SearchX, Plus, type LucideIcon } from 'lucide-react'
+import { Umbrella, UtensilsCrossed, Package, Newspaper, Building2, Waves, SearchX, Plus, type LucideIcon } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
 
 interface DiscoverMoreProps {
@@ -16,9 +16,9 @@ interface DiscoverMoreProps {
 const POPULAR_SECTIONS: { Icon: LucideIcon; label: string; href: string }[] = [
   { Icon: Umbrella,        label: 'Playas',       href: '/playas'      },
   { Icon: UtensilsCrossed, label: 'Restaurantes', href: '/restaurantes' },
-  { Icon: PartyPopper,     label: 'Eventos',      href: '/eventos'     },
+  { Icon: Package,         label: 'Clasificados', href: '/clasificados' },
   { Icon: Newspaper,       label: 'Noticias',     href: '/noticias'    },
-  { Icon: Mountain,        label: 'Senderismo',   href: '/senderismo'  },
+  { Icon: Building2,       label: 'Negocios',     href: '/negocios'    },
   { Icon: Waves,           label: 'Turismo',      href: '/turismo'     },
 ]
 

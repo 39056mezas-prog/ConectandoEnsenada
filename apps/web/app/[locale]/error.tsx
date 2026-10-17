@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import { TriangleAlert } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
 
 interface ErrorPageProps {
@@ -35,43 +36,25 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
         fontFamily: 'var(--font-sans)',
       }}
     >
-      <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⚠️</div>
-      <h1
-        style={{
-          fontSize: '1.5rem',
-          fontWeight: 700,
-          marginBottom: '0.5rem',
-          color: 'var(--color-text-primary)',
-        }}
-      >
+      <span aria-hidden="true" style={{ width: 64, height: 64, marginBottom: '1.25rem', borderRadius: 'var(--radius-xl)', display: 'grid', placeItems: 'center', background: 'linear-gradient(145deg, #fef3c7, #fde68a)', color: '#92400e', boxShadow: 'var(--shadow-2)' }}>
+        <TriangleAlert size={30} strokeWidth={1.9} />
+      </span>
+      <h1 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--color-text-primary)' }}>
         Algo salió mal
       </h1>
-      <p
-        style={{
-          color: 'var(--color-text-secondary)',
-          marginBottom: '2rem',
-          maxWidth: '400px',
-        }}
-      >
+      <p style={{ color: 'var(--color-text-secondary)', marginBottom: '1.5rem', maxWidth: '400px' }}>
         Ocurrió un error inesperado. Por favor intenta de nuevo.
       </p>
 
-      {/* Show digest in dev so developers can trace it in server logs */}
-      {process.env.NODE_ENV === 'development' && error.digest && (
-        <code
-          style={{
-            display: 'block',
-            fontSize: '0.75rem',
-            color: 'var(--color-text-tertiary)',
-            marginBottom: '1.5rem',
-            padding: '0.5rem 1rem',
-            background: 'var(--color-surface-overlay)',
-            borderRadius: 'var(--radius-md)',
-          }}
-        >
-          Digest: {error.digest}
-        </code>
-      )}
+      {/* Technical details: harmless, and lets the site owner send an exact error instead of "it broke". */}
+      <details style={{ marginBottom: '1.5rem', maxWidth: '560px', width: '100%', textAlign: 'left' }}>
+        <summary style={{ cursor: 'pointer', textAlign: 'center', fontSize: '0.8125rem', color: 'var(--color-text-tertiary)' }}>
+          Detalles técnicos
+        </summary>
+        <pre style={{ marginTop: '0.75rem', padding: '0.75rem 1rem', fontSize: '0.75rem', whiteSpace: 'pre-wrap', wordBreak: 'break-word', background: 'var(--color-surface-overlay)', borderRadius: 'var(--radius-md)', color: 'var(--color-text-secondary)' }}>
+{error.message || '(sin mensaje)'}{error.digest ? `\nDigest: ${error.digest}` : ''}
+        </pre>
+      </details>
 
       <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center' }}>
         <button

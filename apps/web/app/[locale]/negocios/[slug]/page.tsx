@@ -5,6 +5,7 @@
 
 import { notFound }          from 'next/navigation'
 import { Link } from '@/i18n/navigation'
+import { getSiteUrl } from '@/lib/site-url'
 import type { Metadata }     from 'next'
 import { PlaceProfile }      from '@/components/directory/PlaceProfile'
 import { DiscoverMore }      from '@/components/directory/DiscoverMore'
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const desc = p.seo_description ?? p.short_desc_es ?? p.description_es?.slice(0, 160)
   const cover = place.media?.find((m) => m.is_cover) ?? place.media?.[0]
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://conectandoensenada.org'
+  const siteUrl = getSiteUrl()
 
   return {
     title:       p.seo_title ?? name,
@@ -58,7 +59,7 @@ export default async function PlaceDetailPage({ params }: Props) {
   // Fire-and-forget view count increment (non-blocking)
   incrementPlaceView(place.place.id).catch(() => {})
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://conectandoensenada.org'
+  const siteUrl = getSiteUrl()
   const pageUrl = `${siteUrl}/negocios/${slug}`
 
   return (

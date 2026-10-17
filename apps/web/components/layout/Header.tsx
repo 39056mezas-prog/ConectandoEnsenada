@@ -1,13 +1,13 @@
 'use client'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { Menu, X, Plus, Building2, Palmtree, UtensilsCrossed, Umbrella, CalendarDays, Newspaper, type LucideIcon } from 'lucide-react'
+import { Menu, X, Plus, Building2, Palmtree, UtensilsCrossed, Umbrella, Package, Newspaper, type LucideIcon } from 'lucide-react'
 import { Link, usePathname } from '@/i18n/navigation'
 import { UserMenu } from '@/components/auth/UserMenu'
 import { BrandLogo } from '@/components/brand/BrandLogo'
 
 type NavItem = {
-  key: 'businesses' | 'tourism' | 'restaurants' | 'beaches' | 'events' | 'news'
+  key: 'businesses' | 'tourism' | 'restaurants' | 'beaches' | 'news' | 'marketplace'
   href: string
   icon: LucideIcon
   /** sub-routes that belong to ANOTHER control (e.g. the "add business" button) */
@@ -19,8 +19,8 @@ const NAV_LINKS: NavItem[] = [
   { key: 'tourism',     href: '/turismo',      icon: Palmtree },
   { key: 'restaurants', href: '/restaurantes', icon: UtensilsCrossed },
   { key: 'beaches',     href: '/playas',       icon: Umbrella },
-  { key: 'events',      href: '/eventos',      icon: CalendarDays },
   { key: 'news',        href: '/noticias',     icon: Newspaper },
+  { key: 'marketplace', href: '/clasificados', icon: Package },
 ]
 
 /** `pathname` has no locale prefix (next-intl strips it), so /en/playas → /playas. */
@@ -74,7 +74,7 @@ export function Header() {
     <header className="site-header" data-scrolled={scrolled}>
       <div className="container-app" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '64px', gap: '1rem' }}>
         <Link href="/" aria-label="ConectandoEnsenada.org — inicio" style={{ flexShrink: 0, display: 'flex', alignItems: 'center', borderRadius: 'var(--radius-md)' }}>
-          <BrandLogo tone="light" size={34} />
+          <BrandLogo tone="light" size={36} />
         </Link>
 
         <nav aria-label="Navegación principal" className="hidden-mobile">

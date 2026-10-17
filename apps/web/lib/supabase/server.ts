@@ -2,6 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import type { CookieOptions } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import type { Database } from '@ce/types'
+import { PLACEHOLDER_KEY, PLACEHOLDER_URL, readSupabaseEnv } from './env'
 
 /**
  * Creates a Supabase client for use in:
@@ -19,9 +20,14 @@ import type { Database } from '@ce/types'
 export async function createClient() {
   const cookieStore = await cookies()
 
+  // Invalid/missing env must never crash a page: fall back to a placeholder (queries just
+  // return errors → empty lists) and log the reason. /api/health shows the details.
+  const env = readSupabaseEnv()
+  if (!env.ok) console.error('[supabase] configuración inválida:', env.problems.join(' | '))
+
   return createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    env.ok ? env.url : PLACEHOLDER_URL,
+    env.ok ? env.key : PLACEHOLDER_KEY,
     {
       cookies: {
         getAll() {
@@ -66,5 +72,21 @@ export function createAdminClient() {
         persistSession: false,
       },
     }
+  )
+}
+
+/**
+ * Cookie-free client for PUBLIC data (homepage lists, sitemaps…).
+ * Because it never touches cookies(), pages that use it can be cached/ISR'd by Next.js
+ * (`export const revalidate = 300`) instead of being rendered on every request.
+ * Falls back to a harmless placeholder if the env is invalid (queries then just return errors).
+ */
+export function createPublicClient() {
+  const env = readSupabaseEnv()
+  if (!env.ok) console.error('[supabase] configuración inválida:', env.problems.join(' | '))
+  return createSupabaseClient<Database>(
+    env.ok ? env.url : PLACEHOLDER_URL,
+    env.ok ? env.key : PLACEHOLDER_KEY,
+    { auth: { persistSession: false, autoRefreshToken: false } }
   )
 }

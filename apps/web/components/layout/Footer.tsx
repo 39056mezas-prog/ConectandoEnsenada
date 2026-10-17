@@ -8,11 +8,8 @@ const FOOTER_LINKS = [
   { label: 'Negocios',    href: '/negocios'    },
   { label: 'Turismo',     href: '/turismo'     },
   { label: 'Playas',      href: '/playas'      },
-  { label: 'Eventos',     href: '/eventos'     },
   { label: 'Noticias',    href: '/noticias'    },
-  { label: 'Empleos',     href: '/empleos'     },
   { label: 'Clasificados',href: '/clasificados'},
-  { label: 'Senderismo',  href: '/senderismo'  },
 ]
 
 const LEGAL_LINKS = [
