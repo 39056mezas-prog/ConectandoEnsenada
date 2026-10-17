@@ -1,5 +1,30 @@
 # Changelog — ConectandoEnsenada.org
 
+## [Unreleased] — Newspaper front page ("EnsenadaHoy 2.0")
+
+### Added
+- **Front page rebuilt as a newspaper**: dated folio line + directory search, live ticker strip, lead story + secondary stories, "more news", USD→MXN panel (14-day sparkline + converter), weather (now, 5-day, °C/°F) and sea state (waves, period, water temp), classifieds band, house ad slots, featured businesses, explore tiles. Serif headlines (Newsreader) + Manrope for UI.
+- `/noticias` (categories, pagination), `/noticias/[slug]` (NewsArticle JSON-LD, source attribution), `/clasificados` (search, categories, pagination) and `/clasificados/[slug]` (photos, WhatsApp/call/email, safety note).
+- Migration `20260730000017_frontpage_feeds.sql`: read-only public RPCs `news_feed`, `news_article`, `classifieds_feed`, `classified_detail` (SECURITY INVOKER, so existing RLS decides visibility; contact data only in the detail function). Already applied to the live project.
+- `lib/live/fx.ts` (Frankfurter / ECB reference rate) and `lib/live/weather.ts` (Open-Meteo forecast + marine). Every source fails safe: a down API hides its widget, never the page. Optional `OPEN_METEO_API_KEY` switches to the paid commercial hosts.
+- `FRONT_DEMO=1` shows clearly-labelled sample content while the database is empty (preview only).
+- `front` namespace in `messages/es.json` and `messages/en.json`.
+
+### Changed
+- Menu: "Eventos" replaced by "Clasificados". Removed links to pages that do not exist yet (Eventos, Empleos, Senderismo) from the footer and the "discover more" block; tourism cards re-pointed to working pages.
+
+## [Unreleased] — Logo fix + production crash hardening
+
+### Fixed
+- **Logo**: the mark is now traced from the owner's ORIGINAL logo PNG (`components/brand/mark-path.ts`) instead of a hand-drawn approximation. Same pin, hollow, anchor and eye. Also `public/logo-mark.svg` (white) and `public/logo-mark-navy.svg`; `apple-touch-icon.png` regenerated from it.
+- **"Algo salió mal" on every page in production**: reproduced locally. A `NEXT_PUBLIC_SITE_URL` without `https://` (e.g. `conectandoensenada.org`) made `new URL()` throw in the root layout metadata. New `lib/site-url.ts` normalises it (adds https, strips quotes/paths, falls back to the real domain).
+- Invalid Supabase env values (secret key pasted into the public key variable, URL with `/rest/v1`, quotes/spaces) no longer crash pages: `lib/supabase/env.ts` validates and normalises; server, browser and middleware clients fall back to a harmless placeholder.
+- Homepage featured list uses a cookie-free client (`createPublicClient`) so the page is cached/ISR as intended, and a failed query shows the empty state instead of an error.
+
+### Added
+- `GET /api/health`: deployment self-check (env present/valid, key type, Supabase reachable, `search_places` works). Never prints secrets.
+- Error pages show a collapsible "Detalles técnicos" (message + digest) and there is now an `app/global-error.tsx` for root-layout failures.
+
 ## [Unreleased] — Living Coast redesign
 
 ### Added
