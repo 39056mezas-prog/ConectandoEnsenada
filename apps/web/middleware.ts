@@ -2,6 +2,7 @@ import createMiddleware from 'next-intl/middleware'
 import { type NextRequest, NextResponse } from 'next/server'
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { routing } from '@/i18n/routing'
+import { readSupabaseEnv } from '@/lib/supabase/env'
 
 const handleI18nRouting = createMiddleware(routing)
 const PROTECTED = ['/perfil', '/dashboard', '/negocios/nuevo']
@@ -14,8 +15,9 @@ function isAuthOnly(p: string)  { const s = stripLocale(p); return AUTH_ONLY.som
 export async function middleware(request: NextRequest) {
   const response = handleI18nRouting(request)
   const pathname = request.nextUrl.pathname
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const env = readSupabaseEnv()
+  const supabaseUrl = env.ok ? env.url : ''
+  const supabaseKey = env.ok ? env.key : ''
   // If Supabase env vars are missing (e.g. misconfigured deploy), keep public
   // pages alive instead of crashing every request. Protected routes still redirect to login.
   if (!supabaseUrl || !supabaseKey) {
